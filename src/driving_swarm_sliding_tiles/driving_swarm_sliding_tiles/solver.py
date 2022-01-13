@@ -44,9 +44,9 @@ def find_neighbors_of_x(configuration, node_list, edge_list):
     return find_neighbors(node, edge_list)
 
 
-def recursive(nb, config, target_config, h_list, config_dict):
+def recursive(nb, config, target_config, h_list, config_dict, node_list):
     for i in nb:
-        t_config = swap_neighbor(config, i)
+        t_config = swap_neighbor(config, i, node_list)
         if t_config == target_config:
             h_list.append(i)
             return True
@@ -72,10 +72,7 @@ def solve(data_config, target_config):
         return h_list
 
     nb = find_neighbors_of_x(data_config.getconfig(), data_config.get_vectors(), data_config.get_edges)
-    recursive(nb, data_config, target_config, config_dict)
-
-
-
+    return recursive(nb, data_config, target_config, config_dict, data_config.get_vectors())
 
 
 
