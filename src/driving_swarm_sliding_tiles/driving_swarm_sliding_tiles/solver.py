@@ -1,6 +1,3 @@
-import data_configuration as dc
-
-
 def find_neighbors(node, edge_list ):
     n_list = []
     for k in edge_list:
@@ -13,12 +10,12 @@ def find_neighbors(node, edge_list ):
 
 
 def get_robot_node(configuration, robot, node_list, ):
-    i = 0
+    k = 0
     for i in configuration:
         if i == robot:
             break
-        i = i+1
-    return node_list[i]
+        k = k+1
+    return node_list[k]
 
 
 def swap_neighbor(config, node, node_list):
@@ -73,7 +70,6 @@ def solve(data_config, target_config):
 
     nb = find_neighbors_of_x(data_config.getconfig(), data_config.get_vectors(), data_config.get_edges)
     return recursive(nb, data_config, target_config, config_dict, data_config.get_vectors())
-
 
 
 
