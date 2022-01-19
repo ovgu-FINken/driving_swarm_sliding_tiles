@@ -14,6 +14,7 @@ from itertools import groupby
 
 import networkx as nx
 import random
+import solver
 
 def start_conf():
     placement_list = ['x0','r1','r2','r3','r4','r5']
@@ -52,6 +53,62 @@ class NavGraphGlobalPlanner(NavGraphNode):
             self.node_occupancies[robot] = None
             self.robot_publishers[robot] = self.create_publisher(String, f'/{robot}/nav/plan', qos_profile)
         self.create_timer(1.0, self.timer_cb)
+        self.node_list=['n1','n2','n3','n4','n5','n6']
+        self.robot_list=['r1','r2','r3','r4','r5']
+        self.config_list=None
+        
+    def transform_config(self):
+        config=[]
+        if None in self.node_occupancies.values():
+            return
+        for i in self.node_list:
+            flag=0
+            for x,y in self.node_occupancies.items():
+                if y==i:
+                    config.append(x)
+                    flag=1
+                    break
+            if flag==0:
+                config.append("x0")
+        return config 
+      
+    def actualize_list(self):
+        actual_config=self.transform_config()
+        if actual_config==self.config_list[0]:
+            self.config_list.pop(0)
+        return	
+        
+    def make_plan(self):
+        self.plans=[]
+        for robot in self.robot_list:
+            self.plans.append([])
+        for config in self.config_list:
+            for i in range(len(config)):
+                if config[i]=="x0":
+                    continue
+                for j in range(len(self.robot_list)):
+                    if config[i] == self.robot_list[j]:
+                        self.plans[j].append(self.node_list[i])
+        return self.plans 
+      
+    def timer_cb(self):
+    	self.get_logger().info(f'agents @: {self.node_occupancies}')
+    	if None in self.node_occupancies.values():
+            return
+        self.plans = self.make_plan()
+        self.execute_plans(self.plans)
+       
+    def execute_plans(self, plans):
+        for k in range(len(plans)):
+            robot_plan=[]
+            robot_plan=[x[0] for x in groupby(plans[k])]
+            self.send_plan_to_robot(robot_plan, robot)
+        str_plan = String()
+        str_plan.data = yaml.dump({'plan': plans, 'constraints': nv})
+        self.plan_publisher.publish(str_plan)
+        self.get_logger().info(f'plans: {plans}')
+        self.get_logger().info(f'constraints: {nv}')
+        
         
 def main():
     rclpy.init()
