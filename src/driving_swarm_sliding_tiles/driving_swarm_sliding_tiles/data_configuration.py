@@ -1,9 +1,5 @@
 import networkx as nx
 
-
-d
-
-
 class Data_config:
     def __init__(self, configuration, graph, nodes, edges):
         self.configuration = configuration
