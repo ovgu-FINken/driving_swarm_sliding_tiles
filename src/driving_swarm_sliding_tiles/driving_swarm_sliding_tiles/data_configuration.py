@@ -1,16 +1,22 @@
 import networkx as nx
 
+
+d
+
+
 class Data_config:
-    def __init__(self, configuration, graph):
+    def __init__(self, configuration, graph, nodes, edges):
         self.configuration = configuration
         self.graph = graph
+        self.nodes = nodes
+        self.edges = edges
 
     def get_config(self):
         return self.configuration
 
-    def get_vectors(self):
-        return list(self.graph.nodes)
-
     def get_edges(self):
-        return list(self.graph.edges)
+        return self.edges
+
+    def get_vectors(self):
+        return self.nodes
 

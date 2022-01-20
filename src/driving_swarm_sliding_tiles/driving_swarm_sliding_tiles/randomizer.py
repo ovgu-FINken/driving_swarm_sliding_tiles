@@ -5,7 +5,7 @@
 
 
 
-get_ipython().run_line_magic('matplotlib', 'widget')
+#get_ipython().run_line_magic('matplotlib', 'widget')
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -117,7 +117,8 @@ n = find_element('x0', s)
 # In[10]:
 
 
-def find_node_element(element,set_a):
+def find_node_element(element, set_a):
+    node = None
     for i in set_a:
         if i[0] == element:
             node = i[1]
@@ -152,7 +153,7 @@ nb_list = find_neighbors(s,edge_list)
 # In[21]:
 
 
-def randomize_one_step(s,edge_list,nb_list):
+def randomize_one_step(set_a,edge_list,nb_list):
     #welche Roboter stehen auf den benachbarten Knoten zu x0?
     rob_list = []
     dummy_list = ['n1', 'n2', 'n3', 'n4','n5', 'n6']
@@ -183,7 +184,7 @@ def randomize_one_step(s,edge_list,nb_list):
 # In[22]:
 
 
-result = randomize_one_step(s,edge_list,nb_list)
+# result = randomize_one_step(s,edge_list,nb_list)
 
 
 # In[23]:
@@ -221,7 +222,7 @@ def randomize_multi_steps(set_a,edge_list):
 # In[24]:
 
 
-result = randomize_multi_steps(s,edge_list,nb_list)
+result = randomize_multi_steps(s, edge_list)
 #print(result)
 
 
