@@ -54,7 +54,6 @@ class NavGraphGlobalPlanner(NavGraphNode):
             self.robot_publishers[robot] = self.create_publisher(String, f'/{robot}/nav/plan', qos_profile)
         self.create_timer(1.0, self.timer_cb)
         self.node_list=['n1','n2','n3','n4','n5','n6']
-        self.robot_list=['r1','r2','r3','r4','r5']
         self.config_list=None
         
     def transform_config(self):
@@ -80,21 +79,24 @@ class NavGraphGlobalPlanner(NavGraphNode):
         
     def make_plan(self):
         self.plans=[]
-        for robot in self.robot_list:
+        for robot in self.robots:
             self.plans.append([])
-        for config in self.config_list:
-            for i in range(len(config)):
-                if config[i]=="x0":
-                    continue
-                for j in range(len(self.robot_list)):
-                    if config[i] == self.robot_list[j]:
-                        self.plans[j].append(self.node_list[i])
+        config=config_list[0]
+        for i in range(len(config)):
+            if config[i]=="x0":
+                continue
+            for j in range(len(self.robots)):
+                if config[i] == self.robots[j]:
+                    self.plans[j].append(self.node_list[i])
         return self.plans 
       
     def timer_cb(self):
-    	self.get_logger().info(f'agents @: {self.node_occupancies}')
-    	if None in self.node_occupancies.values():
+        self.get_logger().info(f'agents @: {self.node_occupancies}')
+        if None in self.node_occupancies.values():
             return
+        #if None in self.config_list:
+            #target_config=randomize_mulit_steps()
+            #config_list=solve(transform_config,target_config,data_config)
         self.plans = self.make_plan()
         self.execute_plans(self.plans)
        
@@ -102,7 +104,7 @@ class NavGraphGlobalPlanner(NavGraphNode):
         for k in range(len(plans)):
             robot_plan=[]
             robot_plan=[x[0] for x in groupby(plans[k])]
-            self.send_plan_to_robot(robot_plan, robot)
+            self.send_plan_to_robot(robot_plan, self.robots[k])
         str_plan = String()
         str_plan.data = yaml.dump({'plan': plans, 'constraints': nv})
         self.plan_publisher.publish(str_plan)
