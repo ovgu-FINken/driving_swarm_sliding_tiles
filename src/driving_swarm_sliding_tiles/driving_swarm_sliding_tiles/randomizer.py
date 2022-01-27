@@ -2,17 +2,16 @@
 # coding: utf-8
 
 # In[1]:
-
-
-
 #get_ipython().run_line_magic('matplotlib', 'widget')
+
+import solver
 import matplotlib.pyplot as plt
 import networkx as nx
-import numpy as np
 import random
+import data_configuration
 
 
-# In[ ]:
+# In[2]:
 
 
 #Endconfiguration with 5 robots 
@@ -30,7 +29,7 @@ list_len = len(edge_list)
 #E5.add_edges_from(edge_list)
 
 
-# In[2]:
+# In[3]:
 
 
 def edges(g, edge_list, nodes):
@@ -48,14 +47,14 @@ def edges(g, edge_list, nodes):
     return edge_list
 
 
-# In[3]:
+# In[4]:
 
 
-edge_list = edges(E5,edge_list,nodes)
+edge_list = edges(E5, edge_list, nodes)
 E5.add_edges_from(edge_list)
 
 
-# In[4]:
+# In[5]:
 
 
 plt.figure()
@@ -64,7 +63,7 @@ nx.draw(E5, pos=pos, with_labels = True, edge_color='gray', font_weight='bold', 
 plt.show
 
 
-# In[5]:
+# In[6]:
 
 
 #Zuordnung: Index stimmt mit Knotennr überein
@@ -79,14 +78,14 @@ def place_robots(placement_list, graph):
     return rob_list
 
 
-# In[6]:
+# In[7]:
 
 
 s=place_robots(placement_list,E5)
-print(s)
+#print(s)
 
 
-# In[7]:
+# In[8]:
 
 
 def find_element(element,set_a):
@@ -98,7 +97,7 @@ def find_element(element,set_a):
             return n
 
 
-# In[8]:
+# In[9]:
 
 
 def find_element_tuple(element,set_a):
@@ -108,17 +107,16 @@ def find_element_tuple(element,set_a):
     return element_pair
 
 
-# In[9]:
+# In[10]:
 
 
 n = find_element('x0', s)
 
 
-# In[10]:
+# In[11]:
 
 
-def find_node_element(element, set_a):
-    node = None
+def find_node_element(element,set_a):
     for i in set_a:
         if i[0] == element:
             node = i[1]
@@ -128,7 +126,7 @@ def find_node_element(element, set_a):
     return node
 
 
-# In[13]:
+# In[12]:
 
 
 def find_neighbors(set_a, edge_list):
@@ -144,16 +142,16 @@ def find_neighbors(set_a, edge_list):
     return neighbor_list
 
 
-# In[14]:
+# In[13]:
 
 
 nb_list = find_neighbors(s,edge_list)
 
 
-# In[21]:
+# In[14]:
 
 
-def randomize_one_step(set_a,edge_list,nb_list):
+def randomize_one_step(s,edge_list,nb_list):
     #welche Roboter stehen auf den benachbarten Knoten zu x0?
     rob_list = []
     dummy_list = ['n1', 'n2', 'n3', 'n4','n5', 'n6']
@@ -169,28 +167,27 @@ def randomize_one_step(set_a,edge_list,nb_list):
     
     #x0 und c tauschen Plätze (funktioniert)
     k = -1
-    for i in set_a:
+    for i in s:
         k = k+1
-        print(i)
         if i == 'x0':
-            set_a[k] = c
+            s[k] = c
         if i == c:
-            set_a[k] = 'x0'
-        print(set_a)
+            s[k] = 'x0'
         
-    return set_a
+    return s
 
 
-# In[22]:
+# In[15]:
 
 
-# result = randomize_one_step(s,edge_list,nb_list)
+#result = randomize_one_step(s,edge_list,nb_list)
+#print(result)
 
 
-# In[23]:
+# In[16]:
 
 
-def randomize_multi_steps(set_a,edge_list):
+def randomize_multi_steps(s,edge_list,nb_list):
     for x in range(1,5):
         #welche Roboter stehen auf den benachbarten Knoten zu x0?
         rob_list = []
@@ -207,170 +204,33 @@ def randomize_multi_steps(set_a,edge_list):
 
         #x0 und c tauschen Plätze (funktioniert)
         k = -1
-        for i in set_a:
+        for i in s:
             k = k+1
-            print(i)
             if i == 'x0':
-                set_a[k] = c
+                s[k] = c
             if i == c:
-                set_a[k] = 'x0'
-            print(set_a)
+                s[k] = 'x0'
 
-    return set_a
-
-
-# In[24]:
+    return s
 
 
-result = randomize_multi_steps(s, edge_list)
-#print(result)
+# In[17]:
 
+#['n1', 'n2', 'n3', 'n4','n5', 'n6']
+#['x0','r1','r2','r3','r4','r5']
 
-# In[1]:
-
-
-def randomize3(set_a,edge_list):
-    # for x in range(1,5):
-    ng_list = find_neighbors(set_a,edge_list) #Nachbarknoten vom Knoten auf dem x0 steht
-    rob_list = []
-    for i in ng_list:
-        rob = find_node_element(i,set_a) 
-        rob_list.append(rob)
-    c = random.choice(rob_list)
-    d = c
-    #print(rob_list)
-    print(c)
-    set_b = []
-    set_b = set_a
-    
-    #x0 und c tauschen Plätze
-    for index, item in enumerate(set_a):
-        itemlist = list(item)
-        if itemlist[0] == 'x0':
-            itemlist[0] = c
-        if itemlist[1] == 'x0':
-            itemlist[1] = c       
-        item = tuple(itemlist)
-        print(item)
-        print("---")
-    
-
-        #set_a[index] = item
-        #index_a = index
-    
-    for index, item in enumerate(set_b):
-        itemlist = list(item)
-        if itemlist[0] == d:
-            print (itemlist)
-            itemlist[0] = 'x0'
-        if itemlist[1] == d:
-            itemlist[1] = 'x0'      
-        item = tuple(itemlist)
-        print(item)
-        set_a[index] = item
-        print("+++")
-        
-
-    return set_a
-
-
-# In[18]:
-
-
-print(s)
-
-result = randomize3(s,edge_list)
+result = randomize_multi_steps(s,edge_list,nb_list)
+data = data_configuration.Data_config(result, E5, nodes, edge_list)
 print(result)
+plist = ['x0','r1','r2','r3','r4','r5']
+solution = solver.solve(result, plist, data)
+print("solution is: ")
+print(solution)
 
-
-# In[1]:
-
-
-def randomize2(set_a,edge_list):
-    # for x in range(1,5):
-    ng_list = find_neighbors(set_a,edge_list) #Nachbarknoten vom Knoten auf dem x0 steht
-    rob_list = []
-    for i in ng_list:
-        rob = find_node_element(i,set_a) 
-        rob_list.append(rob)
-    c = random.choice(rob_list)
-    #print(rob_list)
-    print(c)
-    
-    #x0 und c tauschen Plätze
-    for index, item in enumerate(set_a):
-        itemlist = list(item)
-        if (itemlist[1] == c):
-            itemlist[1] = 'x0' 
-            item = tuple(itemlist)
-            set_a[index] = item
-            d = set_a[index]
-            set_a.remove(index)
-        if (itemlist[1] == 'x0'):
-            itemlist[1] = c 
-            item = tuple(itemlist)
-            set_a[index] = item
-            d = set_a[index]
-            set_a.remove(index)
-            
-    set_a.append(d)
-    print(item)
-    print("---")
-
-    return set_a
-
-
-# In[37]:
-
-
-def randomize3(set_a,edge_list):
-    # for x in range(1,5):
-    ng_list = find_neighbors(set_a,edge_list) #Nachbarknoten vom Knoten auf dem x0 steht
-    rob_list = []
-    for i in ng_list:
-        rob = find_node_element(i,set_a) 
-        rob_list.append(rob)
-    c = random.choice(rob_list)
-    #print(rob_list)
-    print(c)
-    
-    #x0 und c tauschen Plätze
-    for index, item in enumerate(set_a):
-        itemlist = list(item)
-        if (itemlist[1] == c):
-            itemlist[1] = 'x0' 
-            item = tuple(itemlist)
-            set_a[index] = item
-            d = set_a[index]
-            set_a.remove(index)
-        if (itemlist[1] == 'x0'):
-            itemlist[1] = c 
-            item = tuple(itemlist)
-            set_a[index] = item
-            d = set_a[index]
-            set_a.remove(index)
-            
-    set_a.append(d)
-    print(item)
-    print("---")
-
-    return set_a
 
 
 # In[ ]:
 
 
-def place_robots1(placement_list, graph):
-    set_a = []
-    n = nodes
-    n2 = []
-    p = placement_list
-    while not n == n2:
-        a = random.choice(n)
-        b = random.choice(p)
-        set_a.append((a,b))
-        n.remove(a)
-        p.remove(b)
 
-    return set_a
 
