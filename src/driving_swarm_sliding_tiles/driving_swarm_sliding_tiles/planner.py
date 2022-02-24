@@ -73,22 +73,21 @@ class NavGraphGlobalPlanner(NavGraphNode):
       
     def actualize_list(self):
         actual_config=self.transform_config()
-        if actual_config==self.config_list[0]:
+        if self.node_list[actual_config.index("x0")]==self.config_list[0]:
             self.config_list.pop(0)
         return	
         
     def make_plan(self):
-        self.plans=[]
-        for robot in self.robots:
-            self.plans.append([])
-        config=config_list[0]
-        for i in range(len(config)):
-            if config[i]=="x0":
-                continue
-            for j in range(len(self.robots)):
-                if config[i] == self.robots[j]:
-                    self.plans[j].append(self.node_list[i])
-        return self.plans 
+        self.plan=[]
+        actual_config=self.transform_config()
+        index_x0=self.node_list.index(self.config_list[0])
+        for i in range(len(self.robot_list)):
+            self.plan.append([])
+            if i==index_x0:
+                self.plan[i].append(actual_config.index("x0"))
+            else:
+                self.plan[i].append(i)
+        return self.plan 
       
     def timer_cb(self):
         self.get_logger().info(f'agents @: {self.node_occupancies}')
