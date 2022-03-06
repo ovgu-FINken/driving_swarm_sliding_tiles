@@ -59,8 +59,7 @@ E5.add_edges_from(edge_list)
 
 plt.figure()
 pos = {'n1': (0,2), 'n2': (1,2), 'n3': (0.25,1), 'n4': (1.25,1), 'n5': (0,0), 'n6': (1,0)}
-nx.draw(E5, pos=pos, with_labels = True, edge_color='gray', font_weight='bold', font_color='white')
-plt.show
+nx.draw(E5, pos=pos, with_labels=True, edge_color='gray', font_weight='bold', font_color='white')
 
 
 # In[6]:
@@ -220,12 +219,18 @@ def randomize_multi_steps(s,edge_list,nb_list):
 #['x0','r1','r2','r3','r4','r5']
 
 result = randomize_multi_steps(s,edge_list,nb_list)
+print("edge list:")
+print(edge_list)
 data = data_configuration.Data_config(result, E5, nodes, edge_list)
+print("result is")
 print(result)
 plist = ['x0','r1','r2','r3','r4','r5']
 solution = solver.solve(result, plist, data)
 print("solution is: ")
 print(solution)
+
+plt.show()
+
 
 
 

@@ -45,7 +45,7 @@ def find_neighbors_of_x(configuration, node_list, edge_list):
     return find_neighbors(node, edge_list)
 
 
-def recursive( config, target_config, h_list, config_dict, node_list, edge_list):
+def recursive(config, target_config, h_list, config_dict, node_list, edge_list):
     nb = find_neighbors_of_x(config, node_list, edge_list)
     for i in nb:
         t_config = swap_neighbor(config, i, node_list)
@@ -54,12 +54,12 @@ def recursive( config, target_config, h_list, config_dict, node_list, edge_list)
             return True
 
         config_hash = hash(tuple(t_config))
-        if config_hash in config_dict:
+        if config_hash in config_dict.keys():
             continue
         else:
             config_dict.update({config_hash: t_config})
             h_list.append(i)
-            if recursive( t_config, target_config, h_list, config_dict, node_list, edge_list):
+            if recursive(t_config, target_config, h_list, config_dict, node_list, edge_list):
                 return True
 
             h_list.pop()
