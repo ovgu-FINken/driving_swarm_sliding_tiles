@@ -222,7 +222,7 @@ result = randomize_multi_steps(s,edge_list,nb_list)
 print("edge list:")
 print(edge_list)
 data = data_configuration.Data_config(result, E5, nodes, edge_list)
-print("result is")
+print("result is:")
 print(result)
 plist = ['x0','r1','r2','r3','r4','r5']
 solution = solver.solve(result, plist, data)
