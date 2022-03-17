@@ -225,6 +225,8 @@ data = data_configuration.Data_config(result, E5, nodes, edge_list)
 print("result is:")
 print(result)
 plist = ['x0','r1','r2','r3','r4','r5']
+print("target is")
+print(plist)
 print('running')
 solution = breadth_search.solve(result, plist, data)
 print("solution is: ")

@@ -30,6 +30,7 @@ def get_robot_node(configuration, robot, node_list, ):
 
 
 def swap_neighbor(config, node, node_list):
+    config = list(config)
     k = 0
     for i in node_list:
         if i == node:
@@ -94,20 +95,23 @@ def loop(target_config, config_dict, node_list, edge_list, start_node):
         for k in current_iteration:
             nb = find_neighbors_of_x(k.config, node_list, edge_list)
             for i in nb:
-                t_config = swap_neighbor(k.config, i, node_list)
+                t_config = swap_neighbor(tuple(k.config), i, node_list)
                 if t_config == target_config:
-                    child = TreeNode(start_node, i, t_config)
-                    return trace_route(child)
+                    child = TreeNode(k, i, t_config)
+                    return reversed(trace_route(child))
 
                 config_hash = hash(tuple(t_config))
                 if config_hash in config_dict.keys():
                     continue
                 else:
                     config_dict.update({config_hash: t_config})
-                    child = TreeNode(start_node, i, t_config)
+                    child = TreeNode(k, i, t_config)
                     next_iteration.append(child)
 
         current_iteration = next_iteration
+        next_iteration = []
+        assert len(current_iteration) > 0
+
 
 def solve(init_config, target_config, data_config ):
 
