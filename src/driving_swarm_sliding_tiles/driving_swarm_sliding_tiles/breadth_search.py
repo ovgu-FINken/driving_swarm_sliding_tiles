@@ -1,7 +1,4 @@
-import data_configuration
-import networkx as nx
-
-
+# Class representing
 class TreeNode:
     def __init__(self, parent, prev_robot, config):
         self.parent = parent
@@ -9,6 +6,7 @@ class TreeNode:
         self.config = config
 
 
+# returns list of neighbors for a given graph node
 def find_neighbors(node, edge_list):
     n_list = []
     for k in edge_list:
@@ -29,6 +27,7 @@ def get_robot_node(configuration, robot, node_list, ):
     return node_list[k]
 
 
+# swaps a designated node with x0 under the given configuration
 def swap_neighbor(config, node, node_list):
     config = list(config)
     k = 0
@@ -54,27 +53,6 @@ def find_neighbors_of_x(configuration, node_list, edge_list):
     return find_neighbors(node, edge_list)
 
 
-
-def recursive(config, target_config, h_list, config_dict, node_list, edge_list):
-    nb = find_neighbors_of_x(config, node_list, edge_list)
-    for i in nb:
-        t_config = swap_neighbor(config, i, node_list)
-        if t_config == target_config:
-            h_list.append(i)
-            return True
-
-        config_hash = hash(tuple(t_config))
-        if config_hash in config_dict.keys():
-            continue
-        else:
-            config_dict.update({config_hash: t_config})
-            h_list.append(i)
-            if recursive(t_config, target_config, h_list, config_dict, node_list, edge_list):
-                return True
-
-            h_list.pop()
-
-
 # traces the path upwards to the root and returns list of moved robots
 def trace_route(treenode):
     h_list = []
@@ -85,6 +63,7 @@ def trace_route(treenode):
     return h_list
 
 
+# loop for finding the path of the empty tile
 def loop(target_config, config_dict, node_list, edge_list, start_node):
 
     next_iteration = []
@@ -113,6 +92,7 @@ def loop(target_config, config_dict, node_list, edge_list, start_node):
         assert len(current_iteration) > 0
 
 
+# basically the main function to be called
 def solve(init_config, target_config, data_config ):
 
     start_node = TreeNode(None, None, None)
