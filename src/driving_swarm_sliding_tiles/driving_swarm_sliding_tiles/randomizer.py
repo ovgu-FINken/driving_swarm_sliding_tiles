@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import random
 import data_configuration
+import breadth-first-search_solver as bs
 
 
 # In[2]:
