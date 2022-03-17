@@ -63,7 +63,7 @@ def trace_route(treenode):
     return h_list
 
 
-# loop for finding the path of the empty tile
+# loop for the tree construction and the subsequent pathfinding
 def loop(target_config, config_dict, node_list, edge_list, start_node):
 
     next_iteration = []
