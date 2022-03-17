@@ -3,13 +3,12 @@
 
 # In[1]:
 #get_ipython().run_line_magic('matplotlib', 'widget')
-
+import breadth_search
 import solver
 import matplotlib.pyplot as plt
 import networkx as nx
 import random
 import data_configuration
-import breadth-first-search_solver as bs
 
 
 # In[2]:
@@ -226,7 +225,8 @@ data = data_configuration.Data_config(result, E5, nodes, edge_list)
 print("result is:")
 print(result)
 plist = ['x0','r1','r2','r3','r4','r5']
-solution = solver.solve(result, plist, data)
+print('running')
+solution = breadth_search.solve(result, plist, data)
 print("solution is: ")
 print(solution)
 

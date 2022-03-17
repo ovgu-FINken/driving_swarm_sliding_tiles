@@ -107,6 +107,7 @@ def loop(target_config, config_dict, node_list, edge_list, start_node):
                     child = TreeNode(start_node, i, t_config)
                     next_iteration.append(child)
 
+        current_iteration = next_iteration
 
 def solve(init_config, target_config, data_config ):
 
