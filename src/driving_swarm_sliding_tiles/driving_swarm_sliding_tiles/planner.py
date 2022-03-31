@@ -11,8 +11,8 @@ from std_srvs.srv import Empty
 from driving_swarm_nav_graph.utils import *
 from functools import partial
 from itertools import groupby
-from testplanner.data_configuration import *
-from testplanner.breadth_search import *
+from driving_swarm_sliding_tiles.data_configuration import *
+from driving_swarm_sliding_tiles.breadth_search import *
 
 import networkx as nx
 import random
