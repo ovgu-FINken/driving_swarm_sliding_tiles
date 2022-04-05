@@ -74,7 +74,8 @@ class NavGraphGlobalPlanner(NavGraphNode):
             plans[i].append(x)
             if x == self.config_list[0]:
                 if self.tiling == 'hex':
-                    plans[i].append(self.mid)
+                    if self.empty_node not in self.g.vertex(x).all_neighbors():
+                        plans[i].append(self.mid)
                 plans[i].append(self.empty_node)
             else:
                 plans[i].append(x)
