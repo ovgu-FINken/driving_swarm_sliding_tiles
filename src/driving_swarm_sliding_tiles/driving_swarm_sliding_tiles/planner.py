@@ -15,8 +15,6 @@ from driving_swarm_sliding_tiles.data_configuration import *
 from driving_swarm_sliding_tiles.breadth_search import *
 
 import networkx as nx
-import random
-import solver
 
 def start_conf():
     placement_list = ['x0','r1','r2','r3','r4','r5']
@@ -60,6 +58,9 @@ class NavGraphGlobalPlanner(NavGraphNode):
             self.robot_publishers[robot] = self.create_publisher(String, f'/{robot}/nav/plan', qos_profile)
         self.create_timer(1.0, self.timer_cb)
         self.nodes=[]
+        self.starts = []
+        self.goals = []
+        self.node_constraints = None
            
 
     def make_plan(self) -> dict:
@@ -72,6 +73,7 @@ class NavGraphGlobalPlanner(NavGraphNode):
         for x in self.node_occupancies.values():
             plans.append([])
             plans[i].append(x)
+            self.starts.append(x)
             if x == self.config_list[0]:
                 if self.tiling == 'hex':
                     if self.empty_node not in self.g.vertex(x).all_neighbors():
@@ -90,9 +92,6 @@ class NavGraphGlobalPlanner(NavGraphNode):
         self.get_logger().info(f'agents @: {self.node_occupancies}')
         self.get_logger().info(f'config_list @: {self.config_list}')
         if None in self.node_occupancies.values():
-            return
-        if len(self.config_list)==0:
-            self.get_logger().info('done!')
             return
         if self.plans is None:
             self.get_logger().info('Start planning')
@@ -147,17 +146,21 @@ class NavGraphGlobalPlanner(NavGraphNode):
             if len(self.config_list) == 0:
                 self.get_logger().info('Done!')
                 return
-            self.plans = self.make_plan()
             self.node_constraints = self.make_node_constraints(self.plans)
+            self.plans = self.make_plan()
             self.get_logger().info(f'{self.plans}')
+        if len(self.config_list)==0:
+            self.get_logger().info('done!')
+            return
         if self.config_list[0] not in self.node_occupancies.values() and self.empty_node in self.node_occupancies.values():
             self.empty_node=self.config_list.pop(0)
             if len(self.config_list)==0:
                 self.get_logger().info('done!')
-                return    
+                return  
+            self.node_constraints = self.make_node_constraints(self.plans)  
             self.plans=self.make_plan()
-            self.node_constraints = self.make_node_constraints(self.plans)
             self.get_logger().info(f'{self.plans}')
+
 
         # execute plans
         self.execute_plans(self.plans)
@@ -183,17 +186,8 @@ class NavGraphGlobalPlanner(NavGraphNode):
 
     def make_node_constraints(self, plans) -> dict:
         # get preconditions from plan
-        node_visits = {}
-        # node visits contains the order of robots visiting each node in the graph
-        for robot, plan in plans.items():
-            for t, n in enumerate(plan):
-                if n in node_visits.keys():
-                    node_visits[n].append((t, robot))
-                else:
-                    node_visits[n] = [(t, robot)]
-        for k in node_visits.keys():
-            node_visits[k] = [robot for _, robot in sorted(node_visits[k], key=lambda x: x[0])]
-            node_visits[k] = [x[0] for x in groupby(node_visits[k])]
+        node_visits = {k: [v] for k, v in zip(self.node_occupancies.values(), self.node_occupancies.keys())}
+        
         return node_visits
 
 
@@ -208,8 +202,10 @@ class NavGraphGlobalPlanner(NavGraphNode):
                 # do not insert one node twice
                 #if robot_plan and node == robot_plan[-1]:
                 #    continue
-                if nv[node] and nv[node][0] != robot:
-                    break
+                constraint = nv.get(node)
+                if constraint:
+                    if nv[node][0] != robot:
+                        break
                 else:
                     robot_plan.append(node)
                     #del nv[node][0]
