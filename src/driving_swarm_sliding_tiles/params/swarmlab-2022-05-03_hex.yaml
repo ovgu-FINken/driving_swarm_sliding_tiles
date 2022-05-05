@@ -1,6 +1,6 @@
 - name: "robotA"
-  x_pose: 2.3
-  y_pose: -0.8
+  x_pose: 2.0
+  y_pose: -0.6
   z_pose: 0.0
   yaw_pose: 0.0
   goals:
@@ -8,8 +8,8 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotB"
-  x_pose: 2.3
-  y_pose: -1.2
+  x_pose: 1.1
+  y_pose: -1.1
   z_pose: 0.0
   yaw_pose: 1.5
   goals:
@@ -17,8 +17,8 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotC"
-  x_pose: 2.3
-  y_pose: -1.6
+  x_pose: 1.4
+  y_pose: -0.6
   z_pose: 0.0
   yaw_pose: 0.0
   goals:
@@ -26,8 +26,8 @@
     y : [0.1, -0.1, 0.3]
     theta: [0.0, 1.5, -2.36]
 - name: "robotD"
-  x_pose: 1.9
-  y_pose: -0.8
+  x_pose: 2.3
+  y_pose: -1.1
   z_pose: 0.0
   yaw_pose: 1.57
   goals:
@@ -35,7 +35,7 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotE"
-  x_pose: 1.9
+  x_pose: 2.00
   y_pose: -1.6
   z_pose: 0.0
   yaw_pose: -1.57
@@ -44,8 +44,8 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotF"
-  x_pose: 1.5
-  y_pose: -1.2
+  x_pose: 0.65
+  y_pose: -2.0
   z_pose: 0.0
   yaw_pose: 2.356
   goals:
@@ -53,8 +53,8 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotG"
-  x_pose: 1.5
-  y_pose: -1.6
+  x_pose: 2.2
+  y_pose: -2.1
   z_pose: 0.0
   yaw_pose: 3.142
   goals:
@@ -62,18 +62,8 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotH"
-  x_pose: 1.9
-  y_pose: -1.2
-  z_pose: 0.0
-  yaw_pose: -1.5
-  goals:
-    x : [0.1, 0.4, 3.4, 3.35,  0.3]
-    y : [0.3, 1.0, 1.0, -1.2, -1.15]
-    theta: [0, 0 ,-1.5, -1.5, 3.0]
-    
-- name: "emptyField"
-  x_pose: 1.5
-  y_pose: -0.8
+  x_pose: 2.8
+  y_pose: -1.8
   z_pose: 0.0
   yaw_pose: -1.5
   goals:
