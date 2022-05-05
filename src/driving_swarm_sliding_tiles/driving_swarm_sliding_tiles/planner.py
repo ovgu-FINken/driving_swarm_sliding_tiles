@@ -115,7 +115,7 @@ class NavGraphGlobalPlanner(NavGraphNode):
                     for h in self.g.vertex(node).all_neighbors():
                         if self.g.vertex_index[h] in self.nodes:
                             if (h,node) not in edges:
-                                edges.append((node,h))               
+                                edges.append((node,self.g.Vertex_index[h]))               
             config = []
             for node in self.nodes:
                 graph.add_node(node)
