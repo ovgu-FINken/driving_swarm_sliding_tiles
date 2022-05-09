@@ -17,10 +17,9 @@ def controller_spawning(context, *args, **kwargs):
     n_robots = LaunchConfiguration('n_robots').perform(context)
     robots_file = LaunchConfiguration('robots_file').perform(context)
     use_sim_time = TextSubstitution(text='true')
-    node_file = LaunchConfiguration('node_file').perform(context)
     with open(robots_file, 'r') as stream:
         robots = yaml.safe_load(stream)
-
+        
     controllers.append(Node(
        package='driving_swarm_sliding_tiles',
        executable='planner',
@@ -28,7 +27,6 @@ def controller_spawning(context, *args, **kwargs):
         'use_sim_time': use_sim_time,
         'robot_names': [robot['name'] for robot in robots[:int(n_robots)]],
         'tiling': LaunchConfiguration('tiling'),
-        'nodes_file': node_file,
         # graph file can either be a .yaml for a map, or a file containing an xml-representation for the graph
         'graph_file': os.path.join(
            get_package_share_directory('driving_swarm_bringup'),
@@ -78,24 +76,21 @@ def controller_spawning(context, *args, **kwargs):
 
 
 def generate_launch_description():
-
     args = {
          'behaviour': 'false',
          'world': 'icra2021_no_obstacle.world',
          'map': os.path.join(get_package_share_directory('driving_swarm_bringup'), 'maps' ,'icra2021_map_no_obstacle.yaml'),
-         'robots_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'icra2021_sim_square.yaml'),
+         'robots_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'icra2021_sim_hex.yaml'),
          'rosbag_topics_file': os.path.join(get_package_share_directory('trajectory_follower'), 'params', 'rosbag_topics.yaml'),
-         'qos_override_file': os.path.join(get_package_share_directory('experiment_measurement'), 'params', 'qos_override.yaml'),
-         'node_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'knoten.yaml')
+         'qos_override_file': os.path.join(get_package_share_directory('experiment_measurement'), 'params', 'qos_override.yaml')
     }
     multi_robot_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('driving_swarm_bringup'), 'launch', 'multi_robot.launch.py')),
         launch_arguments=args.items())
 
-
     declare_tiling_cmd = DeclareLaunchArgument(
         'tiling',
-        default_value='square'
+        default_value='hex'
     )
 
     ld = LaunchDescription()

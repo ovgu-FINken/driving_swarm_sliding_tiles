@@ -57,7 +57,12 @@ class NavGraphGlobalPlanner(NavGraphNode):
             self.node_occupancies[robot] = None
             self.robot_publishers[robot] = self.create_publisher(String, f'/{robot}/nav/plan', qos_profile)
         self.create_timer(1.0, self.timer_cb)
-        self.nodes=[]
+        self.declare_parameter('nodes_file')
+        self.nodes_file=self.get_parameter('nodes_file').get_parameter_value().string_value
+        with open(self.nodes_file) as f:
+            data=f.read()
+        self.node_dict=eval(data)
+        self.nodes=[] 
         self.starts = []
         self.goals = []
         self.node_constraints = None
@@ -73,7 +78,9 @@ class NavGraphGlobalPlanner(NavGraphNode):
         for x in self.node_occupancies.values():
             plans.append([])
             plans[i].append(x)
-            self.starts.append(x)
+            if len(self.config_list)==0:
+                plans[i].append(x)
+                continue
             if x == self.config_list[0]:
                 if self.tiling == 'hex':
                     if self.empty_node not in self.g.vertex(x).all_neighbors():
@@ -91,6 +98,8 @@ class NavGraphGlobalPlanner(NavGraphNode):
         self.get_logger().info(f'{self.tiling}')
         self.get_logger().info(f'agents @: {self.node_occupancies}')
         self.get_logger().info(f'config_list @: {self.config_list}')
+        self.get_logger().info(f' @: {self.nodes_file}')
+        self.get_logger().info(f'{str(self.node_dict)}')
         if None in self.node_occupancies.values():
             return
         if self.plans is None:
@@ -98,7 +107,7 @@ class NavGraphGlobalPlanner(NavGraphNode):
             edges = []
             graph = nx.Graph()
             if self.tiling == 'hex':
-                nodes_hex = [51,42,41,50,55,52]
+                nodes_hex = self.node_dict['hex']
                 for k in range(len(self.robots)+1):
                     self.nodes.append(nodes_hex[k])
                 for node in self.nodes[:len(self.nodes)-1]:
@@ -108,7 +117,8 @@ class NavGraphGlobalPlanner(NavGraphNode):
                             edges.append((node,second_node))
                     i=i+1
             elif self.tiling == 'square':
-                nodes_square = [58,61,82,78,79,80,85,81,83]
+                nodes_square = self.node_dict['square']
+                self.get_logger().info(f'{str(nodes_square)}')
                 for k in range(len(self.robots)+1):
                     self.nodes.append(nodes_square[k])  
                 for node in self.nodes:
@@ -143,11 +153,11 @@ class NavGraphGlobalPlanner(NavGraphNode):
             self.config_list = list(solve(config,target_config,data))
             self.get_logger().info('Solver solved riddle to solve!')
             self.get_logger().info(f'{self.config_list}')
+            self.node_constraints = self.make_node_constraints(self.plans)
+            self.plans = self.make_plan()
             if len(self.config_list) == 0:
                 self.get_logger().info('Done!')
                 return
-            self.node_constraints = self.make_node_constraints(self.plans)
-            self.plans = self.make_plan()
             self.get_logger().info(f'{self.plans}')
         if len(self.config_list)==0:
             self.get_logger().info('done!')

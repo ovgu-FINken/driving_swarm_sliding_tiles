@@ -1,0 +1,24 @@
+[0.197s] Invoking command in '/home/roemi/driving_swarm_sliding_tiles/src/driving_swarm_sliding_tiles': PYTHONPATH=/home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/driving_swarm_sliding_tiles build --build-base /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/build install --prefix /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles --record /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/install.log --single-version-externally-managed
+[0.404s] running egg_info
+[0.404s] writing ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/PKG-INFO
+[0.404s] writing dependency_links to ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/dependency_links.txt
+[0.405s] writing entry points to ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/entry_points.txt
+[0.405s] writing requirements to ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/requires.txt
+[0.405s] writing top-level names to ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/top_level.txt
+[0.430s] reading manifest file '../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/SOURCES.txt'
+[0.431s] writing manifest file '../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info/SOURCES.txt'
+[0.432s] running build
+[0.432s] running build_py
+[0.432s] copying driving_swarm_sliding_tiles/planner.py -> /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/build/lib/driving_swarm_sliding_tiles
+[0.432s] running install
+[0.432s] running install_lib
+[0.433s] copying /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/build/lib/driving_swarm_sliding_tiles/planner.py -> /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages/driving_swarm_sliding_tiles
+[0.434s] byte-compiling /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages/driving_swarm_sliding_tiles/planner.py to planner.cpython-38.pyc
+[0.436s] running install_data
+[0.436s] running install_egg_info
+[0.438s] removing '/home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages/driving_swarm_sliding_tiles-0.0.0-py3.8.egg-info' (and everything under it)
+[0.438s] Copying ../../build/driving_swarm_sliding_tiles/driving_swarm_sliding_tiles.egg-info to /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages/driving_swarm_sliding_tiles-0.0.0-py3.8.egg-info
+[0.438s] running install_scripts
+[0.450s] Installing planner script to /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/driving_swarm_sliding_tiles
+[0.450s] writing list of installed files to '/home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/install.log'
+[0.464s] Invoked command in '/home/roemi/driving_swarm_sliding_tiles/src/driving_swarm_sliding_tiles' returned '0': PYTHONPATH=/home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/driving_swarm_sliding_tiles build --build-base /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/build install --prefix /home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles --record /home/roemi/driving_swarm_sliding_tiles/build/driving_swarm_sliding_tiles/install.log --single-version-externally-managed
