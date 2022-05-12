@@ -1,5 +1,0 @@
-  File "/home/roemi/driving_swarm_sliding_tiles/install/driving_swarm_sliding_tiles/lib/python3.8/site-packages/driving_swarm_sliding_tiles/planner.py", line 104
-    self.nodes[]
-               ^
-SyntaxError: invalid syntax
-
