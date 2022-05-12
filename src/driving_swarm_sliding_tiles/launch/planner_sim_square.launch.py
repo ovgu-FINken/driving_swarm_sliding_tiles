@@ -86,7 +86,7 @@ def generate_launch_description():
          'robots_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'icra2021_sim_square.yaml'),
          'rosbag_topics_file': os.path.join(get_package_share_directory('trajectory_follower'), 'params', 'rosbag_topics.yaml'),
          'qos_override_file': os.path.join(get_package_share_directory('experiment_measurement'), 'params', 'qos_override.yaml'),
-         'node_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'knoten.yaml')
+         'node_file': os.path.join(get_package_share_directory('driving_swarm_sliding_tiles'), 'params', 'knoten.txt')
     }
     multi_robot_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('driving_swarm_bringup'), 'launch', 'multi_robot.launch.py')),
