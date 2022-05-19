@@ -26,7 +26,7 @@
     y : [0.1, -0.1, 0.3]
     theta: [0.0, 1.5, -2.36]
 - name: "robotD"
-  x_pose: -0.55
+  x_pose: -0.45
   y_pose: -0.3
   z_pose: 0.0
   yaw_pose: 0.0
@@ -35,7 +35,7 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotE"
-  x_pose: -0.55
+  x_pose: -0.45
   y_pose: 0.3
   z_pose: 0.0
   yaw_pose: 0.0
@@ -62,7 +62,7 @@
     y : [0.3, 1.0, 1.0, -1.2, -1.15]
     theta: [0, 0 ,-1.5, -1.5, 3.0]
 - name: "robotH"
-  x_pose: -0.55
+  x_pose: -0.45
   y_pose: -0.9
   z_pose: 0.0
   yaw_pose: 0.0
