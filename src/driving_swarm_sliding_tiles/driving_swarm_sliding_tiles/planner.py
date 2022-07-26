@@ -95,11 +95,8 @@ class NavGraphGlobalPlanner(NavGraphNode):
       
     def timer_cb(self):
         # if no current plan: make plan
-        self.get_logger().info(f'{self.tiling}')
         self.get_logger().info(f'agents @: {self.node_occupancies}')
         self.get_logger().info(f'config_list @: {self.config_list}')
-        self.get_logger().info(f' @: {self.nodes_file}')
-        self.get_logger().info(f'{str(self.node_dict)}')
         if None in self.node_occupancies.values():
             return
         if self.plans is None:
@@ -145,10 +142,6 @@ class NavGraphGlobalPlanner(NavGraphNode):
             for robot in self.robots:
                 target_config.append(str(robot))
             target_config.append('x0')
-            self.get_logger().info(f'{edges}')
-            self.get_logger().info(f'{self.nodes}')
-            self.get_logger().info(f'{config}')
-            self.get_logger().info(f'{target_config}')
             self.get_logger().info('Solver is solving!')
             self.config_list = list(solve(config,target_config,data))
             self.get_logger().info('Solver solved riddle to solve!')
